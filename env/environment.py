@@ -102,6 +102,7 @@ class CourtroomEnv:
         case = self._state["case"]
         attempt_number = self._state["attempt_number"]
         previous_actions = self._state["previous_actions"]
+        already_exposed = self._state.get("contradictions_exposed_indices", set())
         
         # 1. Compute Reward
         reward_val, info = compute_shaped_reward(
@@ -109,7 +110,8 @@ class CourtroomEnv:
             agent_action={"answer": action.answer},
             case=case,
             attempt_number=attempt_number,
-            previous_actions=previous_actions
+            previous_actions=previous_actions,
+            already_exposed=already_exposed
         )
         
         # 2. Update state
@@ -138,13 +140,13 @@ class CourtroomEnv:
                 done = True
                 
         self._state["done"] = done
-        self._state["total_reward"] += reward_val
+        self._state["total_reward"] += reward_val  # Still useful for internal tracking, but Reward below is the step reward
         
         # 4. Prepare return values
         next_obs = self._get_current_observation()
         
         reward_obj = Reward(
-            value=reward_val,
+            value=reward_val,  # Correct: this is the step reward
             partial_credit=info.get("base_score", 0.0),
             info=info
         )

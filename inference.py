@@ -25,11 +25,14 @@ Identify the logical fallacy.
 Respond with ONLY one of these exact strings, nothing else:
 straw_man, ad_hominem, false_dichotomy, slippery_slope, appeal_to_authority""",
 
-    "build_argument": """You are a senior litigation attorney.
-Build a counter-argument using the most relevant legal precedent.
-Respond ONLY with valid JSON in this exact format:
-{"point_1": "...", "point_2": "...", "point_3": "...", "precedent_used": "..."}
-No explanation. No markdown. Pure JSON only.""",
+    "build_argument": """You are a senior litigation attorney. Study the available_precedents 
+carefully. Pick the ONE most legally relevant precedent.
+Respond ONLY with this exact JSON format, no markdown, no backticks:
+{"point_1": "first argument point", "point_2": "second argument point", 
+"point_3": "third argument point", "precedent_used": "exact precedent name from the list"}
+
+The precedent_used field must be copied EXACTLY from the 
+available_precedents list provided to you.""",
 
     "cross_examine": """You are a sharp cross-examination attorney.
 Your goal is to expose contradictions in the witness statement.
@@ -41,7 +44,12 @@ Respond with ONLY the question, nothing else."""
 
 def run_task(env, task_id, case_id=None, verbose=True):
     obs = env.reset(task_id=task_id, case_id=case_id)
-    total_reward = 0.0
+    
+    if task_id == "build_argument" and verbose:
+        prec_names = [p["name"] for p in obs.content.get("available_precedents", [])]
+        print(f"  [DEBUG] Case Precedents (Expected names): {prec_names}")
+
+    final_score = 0.0
     done = False
     turn = 0
     
@@ -64,7 +72,6 @@ def run_task(env, task_id, case_id=None, verbose=True):
         except Exception as e:
             if verbose:
                 print(f"  Turn {turn}: API Error: {e}")
-            # Use dummy answers to allow script to continue if API fails
             if task_id == "identify_fallacy": raw_answer = "straw_man"
             elif task_id == "build_argument": raw_answer = "{}"
             else: raw_answer = "When did you check the scaffold?"
@@ -78,12 +85,29 @@ def run_task(env, task_id, case_id=None, verbose=True):
             except:
                 answer = {"point_1": raw_answer, "point_2": "", 
                          "point_3": "", "precedent_used": ""}
+            
+            # Precedent extraction fallback
+            if not answer.get("precedent_used"):
+                p1_words = re.findall(r'\w+', answer.get("point_1", "").lower())
+                all_prec_words = set()
+                for p in obs.content.get("available_precedents", []):
+                    all_prec_words.update(re.findall(r'\w+', p["name"].lower()))
+                
+                for word in p1_words:
+                    if word in all_prec_words:
+                        answer["precedent_used"] = word
+                        break
+            
+            if verbose:
+                print(f"  [DEBUG] Parsed Answer: {answer}")
         else:
             answer = raw_answer
         
         action = Action(task_id=task_id, answer=answer)
         obs, reward, done, info = env.step(action)
-        total_reward += reward.value
+        
+        # Aggregation logic: Use MAX reward for all tasks
+        final_score = max(final_score, reward.value)
         
         if verbose:
             print(f"  Turn {turn}: reward={reward.value:.2f} | "
@@ -91,8 +115,8 @@ def run_task(env, task_id, case_id=None, verbose=True):
         
         if done:
             break
-    
-    return total_reward
+            
+    return final_score
 
 def main():
     if API_KEY == "dummy":

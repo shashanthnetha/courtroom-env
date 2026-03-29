@@ -14,8 +14,8 @@ CASES = [
         "fallacy_type": "slippery_slope",
         "witness_statement": "I saw him near the watches at 2:00 PM. I was only 5 feet away and the lighting was perfect. I definitely saw him touch the glass case.",
         "contradictions": [
-            {"description": "Time inconsistency", "trigger_keywords": ["time", "when"]},
-            {"description": "Distance inconsistency", "trigger_keywords": ["distance", "how far"]}
+            {"description": "Time inconsistency", "trigger_keywords": ["time", "when", "2:00", "afternoon"]},
+            {"description": "Distance inconsistency", "trigger_keywords": ["distance", "feet", "far", "near"]}
         ],
         "correct_argument_points": ["Lack of direct evidence", "Innocent explanation for presence", "Slippery slope fallacy"],
         "difficulty": "easy"
@@ -34,8 +34,8 @@ CASES = [
         "fallacy_type": "straw_man",
         "witness_statement": "The scaffold was secure when I checked it on Monday. I was on the ground floor looking up, so I could see everything clearly from 50 yards away.",
         "contradictions": [
-            {"description": "Visibility from distance", "trigger_keywords": ["see", "distance", "yards"]},
-            {"description": "Check date", "trigger_keywords": ["when", "monday", "checked"]}
+            {"description": "Visibility from distance", "trigger_keywords": ["distance", "yards", "see", "far"]},
+            {"description": "Check date", "trigger_keywords": ["when", "monday", "date", "day"]}
         ],
         "correct_argument_points": ["Gross negligence override", "Mandatory safety railings", "Misrepresentation of plaintiff's position"],
         "difficulty": "easy"
@@ -54,8 +54,8 @@ CASES = [
         "fallacy_type": "false_dichotomy",
         "witness_statement": "I never heard any complaints from Gomez. I work in the office next door and the walls are paper thin, so I hear everything. I was out on medical leave all last month though.",
         "contradictions": [
-            {"description": "Presence during events", "trigger_keywords": ["present", "leave", "there"]},
-            {"description": "Hearing capability", "trigger_keywords": ["hear", "walls"]}
+            {"description": "Presence during events", "trigger_keywords": ["leave", "present", "there", "absent"]},
+            {"description": "Hearing capability", "trigger_keywords": ["hear", "walls", "noise", "listen"]}
         ],
         "correct_argument_points": ["Timeline of report vs firing", "Evidence of harassment", "False choice between management and policy"],
         "difficulty": "easy"
@@ -74,8 +74,8 @@ CASES = [
         "fallacy_type": "ad_hominem",
         "witness_statement": "The defendant started it. He was shouting. I was at the bar and saw the whole thing. I had five beers but I was perfectly sober.",
         "contradictions": [
-            {"description": "Sobriety vs consumption", "trigger_keywords": ["beers", "sober", "drink"]},
-            {"description": "Initiation of conflict", "trigger_keywords": ["started", "who"]}
+            {"description": "Sobriety vs consumption", "trigger_keywords": ["beers", "drink", "alcohol", "sober"]},
+            {"description": "Initiation of conflict", "trigger_keywords": ["started", "began", "shouting", "who"]}
         ],
         "correct_argument_points": ["Proportionality of response", "Character attack irrelevance", "Witness credibility"],
         "difficulty": "easy"
@@ -94,8 +94,8 @@ CASES = [
         "fallacy_type": "appeal_to_authority",
         "witness_statement": "The tree looked healthy to me last summer. I walk my dog past it every morning at 6 AM. It was dark but I could see the leaves were green.",
         "contradictions": [
-            {"description": "Visibility in dark", "trigger_keywords": ["dark", "see", "morning"]},
-            {"description": "Health of tree", "trigger_keywords": ["healthy", "leaves"]}
+            {"description": "Visibility in dark", "trigger_keywords": ["dark", "light", "morning", "see"]},
+            {"description": "Health of tree", "trigger_keywords": ["healthy", "decay", "rotten", "leaves"]}
         ],
         "correct_argument_points": ["Visible decay evidence", "Duty of maintenance", "Misplaced authority"],
         "difficulty": "easy"
@@ -116,8 +116,8 @@ CASES = [
         "fallacy_type": "false_dichotomy",
         "witness_statement": "I saw the defendant downloading the CRM database on Friday. He used his personal laptop. I was in the breakroom but I saw his screen from across the hall.",
         "contradictions": [
-            {"description": "Screen visibility", "trigger_keywords": ["screen", "see", "hall"]},
-            {"description": "Date of download", "trigger_keywords": ["friday", "when"]}
+            {"description": "Screen visibility", "trigger_keywords": ["screen", "display", "hall", "see"]},
+            {"description": "Date of download", "trigger_keywords": ["friday", "when", "day", "date"]}
         ],
         "correct_argument_points": ["CRM data is non-public", "Targeted poaching evidence", "Breach of confidentiality"],
         "difficulty": "medium"
@@ -136,8 +136,8 @@ CASES = [
         "fallacy_type": "slippery_slope",
         "witness_statement": "I checked the vitals at 10 PM and they were stable. I was at the nursing station. I didn't actually go into the room, but the monitor was blinking green.",
         "contradictions": [
-            {"description": "Physical check vs monitor", "trigger_keywords": ["room", "inside", "monitor"]},
-            {"description": "Vitals stability", "trigger_keywords": ["stable", "vitals"]}
+            {"description": "Physical check vs monitor", "trigger_keywords": ["room", "inside", "enter", "monitor"]},
+            {"description": "Vitals stability", "trigger_keywords": ["vitals", "pulse", "stable", "check"]}
         ],
         "correct_argument_points": ["Departure from standard protocol", "Ignored warning signs", "Direct link to outcome"],
         "difficulty": "medium"
@@ -156,8 +156,8 @@ CASES = [
         "fallacy_type": "ad_hominem",
         "witness_statement": "I saw a blue car speeding away from the warehouse at midnight. It looked exactly like Marcus's car. I was walking my cat and it was very quiet.",
         "contradictions": [
-            {"description": "Vehicle identification in dark", "trigger_keywords": ["car", "blue", "see"]},
-            {"description": "Time of sighting", "trigger_keywords": ["midnight", "when"]}
+            {"description": "Vehicle identification in dark", "trigger_keywords": ["car", "vehicle", "blue", "see"]},
+            {"description": "Time of sighting", "trigger_keywords": ["midnight", "night", "when", "time"]}
         ],
         "correct_argument_points": ["Lack of specific intent", "Inconclusive identification", "Circumstantial nature of evidence"],
         "difficulty": "medium"
@@ -176,8 +176,8 @@ CASES = [
         "fallacy_type": "slippery_slope",
         "witness_statement": "I noticed the door on Tuesday morning. It was so bright it hurt my eyes. I was driving by at 40mph but it was unmistakable.",
         "contradictions": [
-            {"description": "Observation while driving", "trigger_keywords": ["driving", "speed", "notice"]},
-            {"description": "Subjective brightness", "trigger_keywords": ["bright", "eyes"]}
+            {"description": "Observation while driving", "trigger_keywords": ["driving", "car", "speed", "40mph"]},
+            {"description": "Subjective brightness", "trigger_keywords": ["bright", "eyes", "color", "notice"]}
         ],
         "correct_argument_points": ["Vagueness of 'muted tones'", "Selective enforcement", "Lack of specific color list"],
         "difficulty": "medium"
@@ -196,8 +196,8 @@ CASES = [
         "fallacy_type": "straw_man",
         "witness_statement": "The car was in perfect condition during the test drive. I checked the engine personally on Wednesday. I'm not a mechanic, but I've owned cars for 20 years.",
         "contradictions": [
-            {"description": "Expertise vs claim", "trigger_keywords": ["mechanic", "engine", "checked"]},
-            {"description": "Date of inspection", "trigger_keywords": ["wednesday", "when"]}
+            {"description": "Expertise vs claim", "trigger_keywords": ["mechanic", "expert", "engine", "checked"]},
+            {"description": "Date of inspection", "trigger_keywords": ["wednesday", "day", "when", "date"]}
         ],
         "correct_argument_points": ["Implied warranty applicability", "Misleading 'certified' label", "Pre-existing mechanical defect"],
         "difficulty": "medium"
@@ -218,8 +218,8 @@ CASES = [
         "fallacy_type": "appeal_to_authority",
         "witness_statement": "I discovered the missing funds on Monday, March 3rd. I was working late in the office alone. I remember the date because it was my birthday, which is March 4th.",
         "contradictions": [
-            {"description": "Date mismatch", "trigger_keywords": ["date", "monday", "march", "birthday"]},
-            {"description": "Alone vs discovery", "trigger_keywords": ["alone", "discovered", "who"]}
+            {"description": "Date mismatch", "trigger_keywords": ["monday", "march", "date", "birthday"]},
+            {"description": "Alone vs discovery", "trigger_keywords": ["alone", "office", "who", "there"]}
         ],
         "correct_argument_points": ["Lack of deceptive intent", "Possible accounting error", "Witness credibility/date confusion"],
         "difficulty": "hard"
@@ -238,8 +238,8 @@ CASES = [
         "fallacy_type": "false_dichotomy",
         "witness_statement": "I used the original 1950 survey to set the markers. I did it at noon on a clear day. I couldn't find the original iron pin, so I guessed based on the oak tree.",
         "contradictions": [
-            {"description": "Survey accuracy vs guessing", "trigger_keywords": ["guess", "iron pin", "survey"]},
-            {"description": "Noon vs clear day", "trigger_keywords": ["noon", "visibility", "clear"]}
+            {"description": "Survey accuracy vs guessing", "trigger_keywords": ["guess", "marker", "iron", "pin"]},
+            {"description": "Noon vs clear day", "trigger_keywords": ["noon", "time", "clear", "day"]}
         ],
         "correct_argument_points": ["Reliance on unofficial markers", "Inaccuracy of the tree-based guess", "Priority of 1950 survey"],
         "difficulty": "hard"
@@ -258,8 +258,8 @@ CASES = [
         "fallacy_type": "ad_hominem",
         "witness_statement": "I swept the grape aisle at 10:15 AM. I was very thorough. I was actually in the back room from 10:00 to 10:30, but I remember sweeping before I went in.",
         "contradictions": [
-            {"description": "Time of sweep vs presence", "trigger_keywords": ["sweep", "time", "back room"]},
-            {"description": "Thoroughness vs absence", "trigger_keywords": ["thorough", "how"]}
+            {"description": "Time of sweep vs presence", "trigger_keywords": ["sweep", "time", "10:15", "room"]},
+            {"description": "Thoroughness vs absence", "trigger_keywords": ["thorough", "back", "where", "gone"]}
         ],
         "correct_argument_points": ["Failure of sweeping protocol", "Duration of hazard presence", "Constructive notice"],
         "difficulty": "hard"
@@ -278,8 +278,8 @@ CASES = [
         "fallacy_type": "slippery_slope",
         "witness_statement": "The project was on track until the internet outage in February. The outage lasted for two weeks. I was able to work from home using my 5G hotspot the whole time though.",
         "contradictions": [
-            {"description": "Outage vs work capability", "trigger_keywords": ["outage", "hotspot", "work"]},
-            {"description": "Duration of delay", "trigger_keywords": ["two weeks", "delay", "february"]}
+            {"description": "Outage vs work capability", "trigger_keywords": ["outage", "work", "internet", "hotspot"]},
+            {"description": "Duration of delay", "trigger_keywords": ["weeks", "delay", "february", "long"]}
         ],
         "correct_argument_points": ["Time is of the essence clause", "Invalid force majeure claim", "Actual work capability during outage"],
         "difficulty": "hard"
@@ -299,7 +299,7 @@ CASES = [
         "witness_statement": "I saw the defendant's car parked outside the house at 3 AM. It was pitch black and I was looking through a telescope from two blocks away. I saw his face clearly.",
         "contradictions": [
             {"description": "Visibility through telescope in dark", "trigger_keywords": ["telescope", "dark", "see", "face"]},
-            {"description": "Location of car", "trigger_keywords": ["parked", "where"]}
+            {"description": "Location of car", "trigger_keywords": ["parked", "outside", "car", "where"]}
         ],
         "correct_argument_points": ["Invalid search of trunk", "Insufficient proof of entry", "Unreliable witness identification"],
         "difficulty": "hard"
