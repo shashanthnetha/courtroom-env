@@ -1,68 +1,50 @@
-from fastapi import FastAPI, HTTPException
-from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
-from typing import Optional, Any
-from env.environment import CourtroomEnv, Action, Observation
-
-app = FastAPI(title="courtroom-env", version="1.0.0")
-
-# Add CORS middleware
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+import gradio as gr
+import json
+from env.environment import CourtroomEnv, Action
 
 env = CourtroomEnv()
 
-class ResetRequest(BaseModel):
-    task_id: str = "identify_fallacy"
-    case_id: Optional[str] = None
+def reset_env(task_id):
+    obs = env.reset(task_id=task_id)
+    return json.dumps(obs.model_dump(), indent=2)
 
-@app.get("/health")
-async def health():
-    return {"status": "ok", "environment": "courtroom-env", "version": "1.0.0"}
-
-@app.post("/reset")
-async def reset(request: ResetRequest):
+def step_env(task_id, answer):
     try:
-        obs = env.reset(task_id=request.task_id, case_id=request.case_id)
-        return obs
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-@app.post("/step")
-async def step(action: Action):
-    if not env.reset_called:
-        raise HTTPException(status_code=400, detail="Environment must be reset before step()")
-    try:
+        action = Action(task_id=task_id, answer=answer)
         obs, reward, done, info = env.step(action)
-        return {
-            "observation": obs,
-            "reward": reward,
+        return json.dumps({
+            "observation": obs.model_dump(),
+            "reward": reward.model_dump(),
             "done": done,
             "info": info
-        }
-    except ValueError as e:
-        raise HTTPException(status_code=400, detail=str(e))
+        }, indent=2)
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        return json.dumps({"error": str(e)})
 
-@app.get("/state")
-async def get_state():
-    return env.state()
+def get_state():
+    return json.dumps(env.state(), indent=2, default=str)
 
-@app.get("/tasks")
-async def get_tasks():
-    tasks_list = []
-    for task_id, task in env.tasks.items():
-        max_attempts = getattr(task, "max_attempts", getattr(task, "max_turns", 1))
-        tasks_list.append({
-            "id": task_id,
-            "difficulty": task.difficulty,
-            "description": task.description,
-            "max_attempts": max_attempts
-        })
-    return tasks_list
+with gr.Blocks(title="courtroom-env") as demo:
+    gr.Markdown("# ⚖️ courtroom-env\nLegal argumentation environment for AI agents")
+    
+    with gr.Row():
+        task_dropdown = gr.Dropdown(
+            choices=["identify_fallacy", "build_argument", "cross_examine"],
+            value="identify_fallacy",
+            label="Task"
+        )
+        reset_btn = gr.Button("Reset", variant="primary")
+    
+    obs_output = gr.Textbox(label="Observation", lines=10)
+    answer_input = gr.Textbox(label="Answer / Action", lines=3)
+    step_btn = gr.Button("Step", variant="secondary")
+    step_output = gr.Textbox(label="Result", lines=10)
+    state_btn = gr.Button("Get State")
+    state_output = gr.Textbox(label="State", lines=5)
+
+    reset_btn.click(reset_env, inputs=[task_dropdown], outputs=[obs_output])
+    step_btn.click(step_env, inputs=[task_dropdown, answer_input], outputs=[step_output])
+    state_btn.click(get_state, outputs=[state_output])
+
+if __name__ == "__main__":
+    demo.launch(server_name="0.0.0.0", server_port=7860)

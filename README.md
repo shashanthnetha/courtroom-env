@@ -3,7 +3,7 @@ title: Courtroom Env
 emoji: ⚖️
 colorFrom: blue
 colorTo: purple
-sdk: docker
+sdk: gradio
 pinned: false
 ---
 
