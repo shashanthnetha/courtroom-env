@@ -1,3 +1,12 @@
+---
+title: Courtroom Env
+emoji: ⚖️
+colorFrom: blue
+colorTo: purple
+sdk: docker
+pinned: false
+---
+
 # courtroom-env
 
 courtroom-env is the first legal argumentation environment on OpenEnv. 
