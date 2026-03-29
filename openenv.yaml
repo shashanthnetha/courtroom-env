@@ -1,0 +1,59 @@
+name: courtroom-env
+version: "1.0.0"
+description: >
+  A legal argumentation environment where AI agents learn to detect logical 
+  fallacies, construct evidence-based arguments, and conduct cross-examinations.
+  First legal reasoning environment on OpenEnv — benchmarks hallucination 
+  resistance, multi-step deductive reasoning, and red-herring rejection.
+author: "Pittala Shashanth"
+license: MIT
+tags:
+  - openenv
+  - legal-reasoning
+  - argumentation
+  - hallucination-benchmark
+  - multi-turn
+  - real-world
+tasks:
+  - id: identify_fallacy
+    difficulty: easy
+    description: "Identify the logical fallacy in opposing counsel's argument"
+    max_steps: 3
+    reward_range: [0.0, 1.0]
+  - id: build_argument
+    difficulty: medium
+    description: "Construct a 3-point counter-argument using the correct precedent"
+    max_steps: 3
+    reward_range: [0.0, 1.0]
+  - id: cross_examine
+    difficulty: hard
+    description: "Expose 2 contradictions in witness statement through questioning"
+    max_steps: 5
+    reward_range: [0.0, 1.0]
+observation_space:
+  type: object
+  description: "Task-specific observation containing case facts, instructions, and context"
+  fields:
+    - name: task_id
+      type: string
+    - name: case_id
+      type: string
+    - name: content
+      type: object
+      description: "Task-specific fields (case_facts, opposing_argument, precedents, etc.)"
+    - name: attempt_number
+      type: integer
+    - name: max_attempts
+      type: integer
+action_space:
+  type: object
+  fields:
+    - name: task_id
+      type: string
+    - name: answer
+      type: "string | object"
+      description: "String for easy/hard tasks, JSON object for medium task"
+baseline_scores:
+  identify_fallacy: 0.85
+  build_argument: 0.62
+  cross_examine: 0.38
